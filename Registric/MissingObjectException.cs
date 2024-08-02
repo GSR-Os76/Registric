@@ -1,18 +1,18 @@
-﻿using Microsoft.Win32;
-
-namespace GSR.Registric
+﻿namespace GSR.Registric
 {
-	/// <summary>
-	/// An object wasn't present in a <see cref="IRegister{T}"/> when it was expected to be.
-	/// </summary>
-	[Serializable]
-	public class MissingObjectException<T> : Exception
-	{
+    /// <summary>
+    /// An object wasn't present in a <see cref="IRegister{T, TKey}"/> when it was expected to be.
+    /// </summary>
+    [Serializable]
+    public class MissingObjectException<T, TKey> : Exception
+        where T : notnull
+        where TKey : notnull
+    {
         /// <summary>
         /// Construct an exception with a message indicating what key the error emerged from.
         /// </summary>
         /// <param name="key">The excepted key.</param>
-        public MissingObjectException(RegisterKey<T> key) : base($"Object missing for: {key}.") { }
+        public MissingObjectException(RegisterKey<T, TKey> key) : base($"Object missing for: {key}.") { }
         /// <inheritdoc/>
         public MissingObjectException() { }
         /// <inheritdoc/>
@@ -21,7 +21,7 @@ namespace GSR.Registric
         public MissingObjectException(string message, Exception inner) : base(message, inner) { }
         /// <inheritdoc/>
         protected MissingObjectException(
-		  System.Runtime.Serialization.SerializationInfo info,
-		  System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
-	} // end class
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    } // end class
 } // end namespace

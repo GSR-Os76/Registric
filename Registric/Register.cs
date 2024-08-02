@@ -1,6 +1,13 @@
 ﻿namespace GSR.Registric
 {
-    public class SimpleRegister<T> : IRegister<T>
+    /// <summary>
+    /// Simple <see cref="IRegister{T, TKey}"/> implementation.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TKey"></typeparam>
+    public class Register<T, TKey> : IRegister<T, TKey>
+        where T : notnull
+        where TKey : notnull
     {
         private readonly IDictionary<RegisterKey<T>, T> _loaded = new Dictionary<RegisterKey<T>, T>();
 
