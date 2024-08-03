@@ -29,7 +29,10 @@ namespace GSR.Registric
 
 
 
-        /// <inheritdoc/>
+        /// <summary>
+        /// Mark the register as closed, preventing further additions, and assuring all promises can be fullfilled.
+        /// </summary>
+        /// <exception cref="AggregateException">A collection of <see cref="MissingAssociationException"/> for every key that wasn't associated with a value.</exception>
         public void Close()
         {
             if (_isClosed)
@@ -62,6 +65,7 @@ namespace GSR.Registric
 
             return _promised[key];
         } // end Get()
+
 
         /// <inheritdoc/>
         public IReference<T, TKey> AssociateValue(TKey key, T value)

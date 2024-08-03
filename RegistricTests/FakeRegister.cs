@@ -32,11 +32,6 @@ namespace GSR.Tests.Registric
             throw new NotImplementedException();
         }
 
-        public void Close()
-        {
-            throw new NotImplementedException();
-        }
-
         public bool Contains(TKey key) => _contains(key);
 
         public IReference<T, TKey> Get(TKey key)

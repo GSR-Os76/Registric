@@ -15,7 +15,7 @@
         public int Count { get; }
 
         /// <summary>
-        /// Has the register been closed to modification.
+        /// Has the register been closed to modification, and assured that all promises are fulfilled.
         /// </summary>
         public bool IsClosed { get; }
 
@@ -60,15 +60,5 @@
         /// <exception cref="KeyCollisionException">An object had already been associated with that key.</exception>
         public IReference<T, TKey> AssociateValue(TKey key, T value);
 
-
-
-        /// <summary>
-        /// Mark the register as closed, preventing further additions, and assuring all promises can be fullfilled.
-        /// </summary>
-        /// <exception cref="AggregateException">A collection of MissingObjectExceptions for every not associated key.</exception>
-        /// <exception cref="MissingAssociationException">A key was promised and yet never associated with a value.</exception>
-        public void Close();
-#warning, possibly hide this from interfaces so users can't close a register as easily when inappropriate.
-#warning, probably narrow to single type of exception.
     } // end interface
 } // end namespace

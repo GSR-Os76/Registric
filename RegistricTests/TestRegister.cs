@@ -84,7 +84,7 @@ namespace GSR.Tests.Registric
         [TestMethod]
         public void TestCloseWithAssociated()
         {
-            IRegister<int, string> r = new Register<int, string>();
+            Register<int, string> r = new Register<int, string>();
 
             r.AssociateValue("ejh", 904032);
             r.Close();
@@ -94,7 +94,7 @@ namespace GSR.Tests.Registric
         [ExpectedException(typeof(AggregateException))]
         public void TestCloseWithUnassociated()
         {
-            IRegister<int, string> r = new Register<int, string>();
+            Register<int, string> r = new Register<int, string>();
 
             r.Get(";;;;;;;;;;;;;;;;;;;");
             r.Close();
@@ -103,7 +103,7 @@ namespace GSR.Tests.Registric
         [TestMethod]
         public void TestGetExistingAfterClosure()
         {
-            IRegister<int, string> r = new Register<int, string>();
+            Register<int, string> r = new Register<int, string>();
 
             string b = "304";
             int value = 85930258;
@@ -116,7 +116,7 @@ namespace GSR.Tests.Registric
         [ExpectedException(typeof(InvalidOperationException))]
         public void TestGetNewAfterClosure()
         {
-            IRegister<int, string> r = new Register<int, string>();
+            Register<int, string> r = new Register<int, string>();
 
             r.Close();
             r.Get("304");
@@ -126,7 +126,7 @@ namespace GSR.Tests.Registric
         [ExpectedException(typeof(InvalidOperationException))]
         public void TestAssociateNewValueAfterClosure()
         {
-            IRegister<int, string> r = new Register<int, string>();
+            Register<int, string> r = new Register<int, string>();
 
             r.Close();
             r.AssociateValue("304", default);
@@ -136,7 +136,7 @@ namespace GSR.Tests.Registric
         [ExpectedException(typeof(InvalidOperationException))]
         public void TestAssociateExistingValueAfterClosure()
         {
-            IRegister<int, string> r = new Register<int, string>();
+            Register<int, string> r = new Register<int, string>();
 
             string k = "3459jmivgowe";
             r.AssociateValue(k, 0);
