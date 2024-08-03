@@ -13,7 +13,17 @@
     <Authors>GSR</Authors>
     <Company>GSR</Company>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Product>Registric</Product>
+    <RepositoryUrl>https://github.com/GSR-Os76/Registric</RepositoryUrl>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="GSR.Utilic">
