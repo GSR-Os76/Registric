@@ -4,15 +4,19 @@
     /// An object wasn't present in a <see cref="IRegister{T, TKey}"/> when it was expected to be.
     /// </summary>
     [Serializable]
-    public class MissingObjectException<T, TKey> : Exception
-        where T : notnull
-        where TKey : notnull
+    public class MissingObjectException : Exception
+
     {
         /// <summary>
         /// Construct an exception with a message indicating what key the error emerged from.
         /// </summary>
         /// <param name="key">The excepted key.</param>
-        public MissingObjectException(RegisterKey<T, TKey> key) : base($"Object missing for: {key}.") { }
+        public static MissingObjectException Of<T, TKey>(RegisterKey<T, TKey> key) 
+            where T : notnull
+            where TKey : notnull => new MissingObjectException($"Object missing for: {key}.");
+
+
+
         /// <inheritdoc/>
         public MissingObjectException() { }
         /// <inheritdoc/>

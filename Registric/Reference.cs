@@ -7,7 +7,7 @@ namespace GSR.Registric
     /// </summary>
     /// <typeparam name="T">The type of object referenced.</typeparam>
     /// <typeparam name="TKey"></typeparam>
-    public class Reference<T, TKey> : IReference<T, TKey>
+    public sealed class Reference<T, TKey> : IReference<T, TKey>
         where T : notnull
         where TKey : notnull
     {
@@ -33,6 +33,6 @@ namespace GSR.Registric
         /// <inheritdoc/>
         public T Get() => this.IsPopulated()
             ? _value.Value
-            : throw new MissingObjectException<T, TKey>("The object wasn't present in the register.");
+            : throw new MissingObjectException("The object wasn't present in the register.");
     } // end class
 } // end namespace

@@ -4,15 +4,20 @@
 	/// Exception indicating two objects tried to use the same key within the same name scope.
 	/// </summary>
 	[Serializable]
-	public class KeyCollisionException<T> : ArgumentException
+	public class KeyCollisionException : ArgumentException
 	{
         /// <summary>
 		/// Construct an exception with a message indicating what key the error emerged from.
 		/// </summary>
 		/// <param name="key">The excepted key.</param>
-        public KeyCollisionException(RegisterKey<T> key) : base($"Key collision for: {key}.") { }
-		/// <inheritdoc/>
-		public KeyCollisionException() { }
+        public static KeyCollisionException Of<T, TKey>(RegisterKey<T, TKey> key)
+            where T : notnull
+            where TKey : notnull => new KeyCollisionException($"Key collision for: {key}.");
+
+
+
+        /// <inheritdoc/>
+        public KeyCollisionException() { }
         /// <inheritdoc/>
         public KeyCollisionException(string message) : base(message) { }
         /// <inheritdoc/>
