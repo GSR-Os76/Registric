@@ -35,10 +35,10 @@ namespace GSR.Registric
             if (_isClosed)
                 return;
 
-            MissingObjectException[] e = _promised
+            MissingAssociationException[] e = _promised
                 .Select((x) => x.Key)
                 .Where((x) => !Contains(x))
-                .Select((x) => MissingObjectException.Of(this.CreateKey(x))).ToArray();
+                .Select((x) => MissingAssociationException.Of(this.CreateKey(x))).ToArray();
             if (e.Length > 0)
                 throw new AggregateException(e);
 
@@ -54,7 +54,7 @@ namespace GSR.Registric
         /// <inheritdoc/>
         public IReference<T, TKey> Get(TKey key)
         {
-            if (Promised(key))
+            if (!Promised(key))
                 _promised[key] = new Reference<T, TKey>(this.CreateKey(key), new Lazy<T>(() => _loaded[key]));
 
             return _promised[key];

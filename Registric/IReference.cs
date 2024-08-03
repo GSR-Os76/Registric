@@ -20,7 +20,7 @@
         /// Retrieve the object from the given register.
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="MissingObjectException">The referenced object didn't exist.</exception>
+        /// <exception cref="MissingAssociationException">The referenced object didn't exist.</exception>
         public T Get();
     } // end interface
 } // end namespace

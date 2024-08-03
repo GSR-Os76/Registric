@@ -33,6 +33,6 @@ namespace GSR.Registric
         /// <inheritdoc/>
         public T Get() => this.IsPopulated()
             ? _value.Value
-            : throw new MissingObjectException("The object wasn't present in the register.");
+            : throw new MissingAssociationException("The object wasn't present in the register.");
     } // end class
 } // end namespace

@@ -34,7 +34,7 @@
         public static bool Contains<T, TKey>(this IRegister<T, TKey> r, RegisterKey<T, TKey> key)
             where T : notnull
             where TKey : notnull 
-            => r.Contains(key.Key);
+            => ReferenceEquals(r, key.Register) && r.Contains(key.Key);
 
         /// <summary>
         /// Call <see cref="IRegister{T, TKey}.Promised(TKey)"/> using a RegisterKey.
@@ -42,7 +42,7 @@
         public static bool Promised<T, TKey>(this IRegister<T, TKey> r, RegisterKey<T, TKey> key)
             where T : notnull
             where TKey : notnull 
-            => r.Promised(key.Key);
+            => ReferenceEquals(r, key.Register) && r.Promised(key.Key);
 
         /// <summary>
         /// Call <see cref="IRegister{T, TKey}.Get(TKey)"/> using a RegisterKey.
@@ -50,7 +50,9 @@
         public static IReference<T, TKey> Get<T, TKey>(this IRegister<T, TKey> r, RegisterKey<T, TKey> key)
             where T : notnull
             where TKey : notnull 
-            => r.Get(key.Key);
+            => ReferenceEquals(r, key.Register) 
+                ? r.Get(key.Key) 
+                : throw new InvalidOperationException("Key didn't belong to the register it was attemptedly used on.");
 
         /// <summary>
         /// Call <see cref="IRegister{T, TKey}.AssociateValue(TKey, T)"/> using a RegisterKey.
@@ -58,7 +60,27 @@
         public static IReference<T, TKey> AssociateValue<T, TKey>(this IRegister<T, TKey> r, RegisterKey<T, TKey> key, T value)
             where T : notnull
             where TKey : notnull
-            => r.AssociateValue(key.Key, value);
+            => ReferenceEquals(r, key.Register)
+                ? r.AssociateValue(key.Key, value)
+                : throw new InvalidOperationException("Key didn't belong to the register it was attemptedly used on.");
+
+
+
+        /// <summary>
+        /// Get's an <see cref="IReference{T, TKey}"/> to the value associated with the register key.
+        /// </summary>
+        public static IReference<T, TKey> Get<T, TKey>(this RegisterKey<T, TKey> key)
+            where T : notnull
+            where TKey : notnull
+            => key.Register.Get(key.Key);
+
+        /// <summary>
+        /// Creates an association between the key and a value.
+        /// </summary>
+        public static IReference<T, TKey> AssociateValue<T, TKey>(this RegisterKey<T, TKey> key, T value)
+            where T : notnull
+            where TKey : notnull
+            => key.Register.AssociateValue(key.Key, value);
 
 
     } // end class

@@ -18,7 +18,7 @@ namespace GSR.Tests.Registric
 
 
         [TestMethod]
-        [ExpectedException(typeof(MissingObjectException))]
+        [ExpectedException(typeof(MissingAssociationException))]
         public void TestGetUnassociated()
         {
             IRegister<int, string> r = new FakeRegister<int, string>(contains: (r) => false, promised: (r) => true);
