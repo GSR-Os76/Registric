@@ -11,9 +11,9 @@ namespace GSR.Registric
         where T : notnull
         where TKey : notnull
     {
-        private readonly IDictionary<RegisterKey<T, TKey>, T> _loaded = new Dictionary<RegisterKey<T, TKey>, T>();
+        private readonly IDictionary<TKey, T> _loaded = new Dictionary<TKey, T>();
 
-        private readonly IDictionary<RegisterKey<T, TKey>, IReference<T, TKey>> _promised = new Dictionary<RegisterKey<T, TKey>, IReference<T, TKey>>();
+        private readonly IDictionary<TKey, IReference<T, TKey>> _promised = new Dictionary<TKey, IReference<T, TKey>>();
 
         /// <inheritdoc/>
         public int Count => _promised.Count;
@@ -25,7 +25,7 @@ namespace GSR.Registric
         public bool _isClosed = false;
 
         /// <inheritdoc/>
-        public RegisterKey<T, TKey>[] Keys => _promised.Keys.ToArray();
+        public TKey[] Keys => _promised.Keys.ToArray();
 
 
 
@@ -38,33 +38,33 @@ namespace GSR.Registric
             MissingObjectException[] e = _promised
                 .Select((x) => x.Key)
                 .Where((x) => !Contains(x))
-                .Select((x) => MissingObjectException.Of(x)).ToArray();
-            if(e.Length > 0)
+                .Select((x) => MissingObjectException.Of(this.CreateKey(x))).ToArray();
+            if (e.Length > 0)
                 throw new AggregateException(e);
 
             _isClosed = true;
         } // end Close()
 
         /// <inheritdoc/>
-        public bool Contains(RegisterKey<T, TKey> key) => _loaded.ContainsKey(key);
+        public bool Contains(TKey key) => _loaded.ContainsKey(key);
 
         /// <inheritdoc/>
-        public bool Promised(RegisterKey<T, TKey> key) => _promised.ContainsKey(key);
+        public bool Promised(TKey key) => _promised.ContainsKey(key);
 
         /// <inheritdoc/>
-        public IReference<T, TKey> Get(RegisterKey<T, TKey> key) 
+        public IReference<T, TKey> Get(TKey key)
         {
-            if (!_promised.ContainsKey(key))
-                _promised[key] = new Reference<T, TKey>(key, new Lazy<T>(() => _loaded[key]));
+            if (Promised(key))
+                _promised[key] = new Reference<T, TKey>(this.CreateKey(key), new Lazy<T>(() => _loaded[key]));
 
             return _promised[key];
         } // end Get()
 
         /// <inheritdoc/>
-        public IReference<T, TKey> AssociateValue<T1>(RegisterKey<T, TKey> key, T value)
+        public IReference<T, TKey> AssociateValue(TKey key, T value)
         {
-            if (_loaded.ContainsKey(key.IsNotNull()))
-                throw KeyCollisionException.Of(key);
+            if (Contains(key.IsNotNull()))
+                throw KeyCollisionException.Of(this.CreateKey(key));
 
             _loaded[key] = value.IsNotNull();
             return Get(key);

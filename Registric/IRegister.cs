@@ -22,7 +22,7 @@
         /// <summary>
         /// All register keys bound to this register.
         /// </summary>
-        public RegisterKey<T, TKey>[] Keys { get; }
+        public TKey[] Keys { get; }
 
 
 
@@ -31,14 +31,14 @@
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public bool Contains(RegisterKey<T, TKey> key);
+        public bool Contains(TKey key);
 
         /// <summary>
         /// Check if the register has promised there will be an object by that key registered before finalization.
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public bool Promised(RegisterKey<T, TKey> key);
+        public bool Promised(TKey key);
 
 
 
@@ -47,7 +47,7 @@
         /// </summary>
         /// <param name="key">The key identifying the object.</param>
         /// <returns></returns>
-        public IReference<T, TKey> Get(RegisterKey<T, TKey> key);
+        public IReference<T, TKey> Get(TKey key);
 
         /// <summary>
         /// Associates a value with 
@@ -56,7 +56,7 @@
         /// <param name="value"></param>
         /// <returns></returns>
         /// <exception cref="KeyCollisionException">An object had already been associated with that key.</exception>
-        public IReference<T, TKey> AssociateValue<T1>(RegisterKey<T, TKey> key, T value);
+        public IReference<T, TKey> AssociateValue(TKey key, T value);
 
 
 
@@ -66,6 +66,6 @@
         /// <exception cref="AggregateException">A collection of MissingObjectExceptions for every not associated key.</exception>
         /// <exception cref="MissingObjectException">A key was promised and yet never associated with a value.</exception>
         public void Close();
-        
+
     } // end interface
 } // end namespace

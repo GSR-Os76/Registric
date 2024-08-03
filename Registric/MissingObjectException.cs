@@ -11,9 +11,9 @@
         /// Construct an exception with a message indicating what key the error emerged from.
         /// </summary>
         /// <param name="key">The excepting key.</param>
-        public static MissingObjectException Of<T, TKey>(RegisterKey<T, TKey> key) 
+        public static MissingObjectException Of<T, TKey>(RegisterKey<T, TKey> key)
             where T : notnull
-            where TKey : notnull => new MissingObjectException($"Object missing for: {key}.");
+            where TKey : notnull => new MissingObjectException($"Object missing for: \"{key}\".");
 
 
 

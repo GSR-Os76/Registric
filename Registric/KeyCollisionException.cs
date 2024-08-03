@@ -1,18 +1,18 @@
 ﻿namespace GSR.Registric
 {
-	/// <summary>
+    /// <summary>
     /// An attempt was made to associate a value with an already associated key.
-	/// </summary>
-	[Serializable]
-	public class KeyCollisionException : ArgumentException
-	{
+    /// </summary>
+    [Serializable]
+    public class KeyCollisionException : ArgumentException
+    {
         /// <summary>
 		/// Construct an exception with a message indicating what key the error emerged from.
 		/// </summary>
 		/// <param name="key">The excepting key.</param>
         public static KeyCollisionException Of<T, TKey>(RegisterKey<T, TKey> key)
             where T : notnull
-            where TKey : notnull => new KeyCollisionException($"Key collision for: {key}.");
+            where TKey : notnull => new KeyCollisionException($"Key collision for: \"{key}\".");
 
 
 
@@ -24,7 +24,7 @@
         public KeyCollisionException(string message, Exception inner) : base(message, inner) { }
         /// <inheritdoc/>
         protected KeyCollisionException(
-		  System.Runtime.Serialization.SerializationInfo info,
-		  System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
-	} // end class
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    } // end class
 } // end namespace

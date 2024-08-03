@@ -14,7 +14,7 @@ namespace GSR.Tests.Registric
             IRegister<int, string> r = new Register<int, string>();
 
             Assert.AreEqual(
-                new RegisterKey<int, string>(r, a), 
+                new RegisterKey<int, string>(r, a),
                 new RegisterKey<int, string>(r, b + c));
         } // end TestEquality()
 
@@ -27,7 +27,7 @@ namespace GSR.Tests.Registric
             IRegister<int, string> r = new Register<int, string>();
 
             Assert.AreNotEqual(
-                new RegisterKey<int, string>(r, a), 
+                new RegisterKey<int, string>(r, a),
                 new RegisterKey<int, string>(r, b + c));
         } // end TestInequality1()
 
@@ -39,7 +39,7 @@ namespace GSR.Tests.Registric
         {
 
             Assert.AreNotEqual(
-                new RegisterKey<int, string>(new Register<int, string>(), a), 
+                new RegisterKey<int, string>(new Register<int, string>(), a),
                 new RegisterKey<int, string>(new Register<int, string>(), b + c));
         } // end TestInequality2()
 
