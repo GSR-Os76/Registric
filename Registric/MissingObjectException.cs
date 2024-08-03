@@ -1,7 +1,7 @@
 ﻿namespace GSR.Registric
 {
     /// <summary>
-    /// An object wasn't present in a <see cref="IRegister{T, TKey}"/> when it was expected to be.
+    /// A key wasn't associated in a <see cref="IRegister{T, TKey}"/> when it was expected to be.
     /// </summary>
     [Serializable]
     public class MissingObjectException : Exception
@@ -10,7 +10,7 @@
         /// <summary>
         /// Construct an exception with a message indicating what key the error emerged from.
         /// </summary>
-        /// <param name="key">The excepted key.</param>
+        /// <param name="key">The excepting key.</param>
         public static MissingObjectException Of<T, TKey>(RegisterKey<T, TKey> key) 
             where T : notnull
             where TKey : notnull => new MissingObjectException($"Object missing for: {key}.");
