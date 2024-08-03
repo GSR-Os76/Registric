@@ -133,7 +133,7 @@ namespace GSR.Tests.Registric
         } // end TestAssociateNewValueAfterClosure()
 
         [TestMethod]
-        [ExpectedException(typeof(KeyCollisionException))]
+        [ExpectedException(typeof(InvalidOperationException))]
         public void TestAssociateExistingValueAfterClosure()
         {
             IRegister<int, string> r = new Register<int, string>();

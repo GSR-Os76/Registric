@@ -55,7 +55,10 @@ namespace GSR.Registric
         public IReference<T, TKey> Get(TKey key)
         {
             if (!Promised(key))
-                _promised[key] = new Reference<T, TKey>(this.CreateKey(key), new Lazy<T>(() => _loaded[key]));
+                if (_isClosed)
+                    throw new InvalidOperationException("Register is closed, can't promise any further values.");
+                else
+                    _promised[key] = new Reference<T, TKey>(this.CreateKey(key), new Lazy<T>(() => _loaded[key]));
 
             return _promised[key];
         } // end Get()
@@ -63,6 +66,9 @@ namespace GSR.Registric
         /// <inheritdoc/>
         public IReference<T, TKey> AssociateValue(TKey key, T value)
         {
+            if (_isClosed)
+                throw new InvalidOperationException("Register is closed, can't associate any further values.");
+
             if (Contains(key.IsNotNull()))
                 throw KeyCollisionException.Of(this.CreateKey(key));
 

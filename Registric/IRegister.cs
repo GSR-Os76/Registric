@@ -47,6 +47,7 @@
         /// </summary>
         /// <param name="key">The key identifying the object.</param>
         /// <returns></returns>
+        /// <exception cref="InvalidOperationException">Register is closed, and can't promise further values.</exception>
         public IReference<T, TKey> Get(TKey key);
 
         /// <summary>
@@ -55,6 +56,7 @@
         /// <param name="key"></param>
         /// <param name="value"></param>
         /// <returns></returns>
+        /// <exception cref="InvalidOperationException">Register is closed, and can't try to associate further values.</exception>
         /// <exception cref="KeyCollisionException">An object had already been associated with that key.</exception>
         public IReference<T, TKey> AssociateValue(TKey key, T value);
 
