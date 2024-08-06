@@ -11,11 +11,11 @@ namespace GSR.Tests.Registric
         [DataRow("gsr.alpha.beta", "gsr", ".alpha.beta")]
         public void TestEquality(string a, string b, string c)
         {
-            IRegister<int, string> r = new Register<int, string>();
+            IRegister<string, int> r = new Register<string, int>();
 
             Assert.AreEqual(
-                new RegisterKey<int, string>(r, a),
-                new RegisterKey<int, string>(r, b + c));
+                new RegisterKey<string, int>(r, a),
+                new RegisterKey<string, int>(r, b + c));
         } // end TestEquality()
 
         [TestMethod]
@@ -24,11 +24,11 @@ namespace GSR.Tests.Registric
         [DataRow("gsr.alpha.beta", "gsr", ".beta.alpha")]
         public void TestInequality1(string a, string b, string c)
         {
-            IRegister<int, string> r = new Register<int, string>();
+            IRegister<string, int> r = new Register<string, int>();
 
             Assert.AreNotEqual(
-                new RegisterKey<int, string>(r, a),
-                new RegisterKey<int, string>(r, b + c));
+                new RegisterKey<string, int>(r, a),
+                new RegisterKey<string, int>(r, b + c));
         } // end TestInequality1()
 
         [TestMethod]
@@ -39,8 +39,8 @@ namespace GSR.Tests.Registric
         {
 
             Assert.AreNotEqual(
-                new RegisterKey<int, string>(new Register<int, string>(), a),
-                new RegisterKey<int, string>(new Register<int, string>(), b + c));
+                new RegisterKey<string, int>(new Register<string, int>(), a),
+                new RegisterKey<string, int>(new Register<string, int>(), b + c));
         } // end TestInequality2()
 
     } // end class

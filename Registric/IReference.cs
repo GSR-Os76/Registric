@@ -3,16 +3,16 @@
     /// <summary>
     /// A refernce to an object within a given register, that may or may not currently exist at the time that it's returned.
     /// </summary>
-    /// <typeparam name="T">The objects type.</typeparam>
     /// <typeparam name="TKey">The type of value used to key the register.</typeparam>
-    public interface IReference<T, TKey>
-        where T : notnull
+    /// <typeparam name="TValue">The objects type.</typeparam>
+    public interface IReference<TKey, TValue>
         where TKey : notnull
+        where TValue : notnull
     {
         /// <summary>
         /// The key identifying the object within it's respective register.
         /// </summary>
-        public RegisterKey<T, TKey> Key { get; }
+        public RegisterKey<TKey, TValue> Key { get; }
 
 
 
@@ -21,6 +21,6 @@
         /// </summary>
         /// <returns></returns>
         /// <exception cref="MissingAssociationException">The referenced object didn't exist.</exception>
-        public T Get();
+        public TValue Get();
     } // end interface
 } // end namespace

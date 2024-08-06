@@ -3,17 +3,17 @@
 namespace GSR.Registric
 {
     /// <summary>
-    /// Simple <see cref="IRegister{T, TKey}"/> implementation.
+    /// Simple <see cref="IRegister{TKey, TValue}"/> implementation.
     /// </summary>
-    /// <typeparam name="T"></typeparam>
+    /// <typeparam name="TValue"></typeparam>
     /// <typeparam name="TKey"></typeparam>
-    public sealed class Register<T, TKey> : IRegister<T, TKey>
-        where T : notnull
+    public sealed class Register<TKey, TValue> : IRegister<TKey, TValue>
         where TKey : notnull
+        where TValue : notnull
     {
-        private readonly IDictionary<TKey, T> _loaded = new Dictionary<TKey, T>();
+        private readonly IDictionary<TKey, TValue> _loaded = new Dictionary<TKey, TValue>();
 
-        private readonly IDictionary<TKey, IReference<T, TKey>> _promised = new Dictionary<TKey, IReference<T, TKey>>();
+        private readonly IDictionary<TKey, IReference<TKey, TValue>> _promised = new Dictionary<TKey, IReference<TKey, TValue>>();
 
         /// <inheritdoc/>
         public int Count => _promised.Count;
@@ -55,20 +55,20 @@ namespace GSR.Registric
         public bool Promised(TKey key) => _promised.ContainsKey(key);
 
         /// <inheritdoc/>
-        public IReference<T, TKey> Get(TKey key)
+        public IReference<TKey, TValue> Get(TKey key)
         {
             if (!Promised(key))
                 if (_isClosed)
                     throw new InvalidOperationException("Register is closed, can't promise any further values.");
                 else
-                    _promised[key] = new Reference<T, TKey>(this.CreateKey(key), new Lazy<T>(() => _loaded[key]));
+                    _promised[key] = new Reference<TKey, TValue>(this.CreateKey(key), new Lazy<TValue>(() => _loaded[key]));
 
             return _promised[key];
         } // end Get()
 
 
         /// <inheritdoc/>
-        public IReference<T, TKey> AssociateValue(TKey key, T value)
+        public IReference<TKey, TValue> Associate(TKey key, TValue value)
         {
             if (_isClosed)
                 throw new InvalidOperationException("Register is closed, can't associate any further values.");

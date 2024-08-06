@@ -10,9 +10,9 @@
 		/// Construct an exception with a message indicating what key the error emerged from.
 		/// </summary>
 		/// <param name="key">The excepting key.</param>
-        public static KeyCollisionException Of<T, TKey>(RegisterKey<T, TKey> key)
-            where T : notnull
-            where TKey : notnull => new KeyCollisionException($"Key collision for: \"{key}\".");
+        public static KeyCollisionException Of<TKey, TValue>(RegisterKey<TKey, TValue> key)
+            where TKey : notnull
+            where TValue : notnull => new($"Key collision for: \"{key}\".");
 
 
 

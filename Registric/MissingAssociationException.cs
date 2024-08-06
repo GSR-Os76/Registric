@@ -1,7 +1,7 @@
 ﻿namespace GSR.Registric
 {
     /// <summary>
-    /// A key wasn't associated in a <see cref="IRegister{T, TKey}"/> when it was expected to be.
+    /// A key wasn't associated in a <see cref="IRegister{TKey, TValue}"/> when it was expected to be.
     /// </summary>
     [Serializable]
     public class MissingAssociationException : Exception
@@ -11,9 +11,9 @@
         /// Construct an exception with a message indicating what key the error emerged from.
         /// </summary>
         /// <param name="key">The excepting key.</param>
-        public static MissingAssociationException Of<T, TKey>(RegisterKey<T, TKey> key)
-            where T : notnull
-            where TKey : notnull => new MissingAssociationException($"Object missing for: \"{key}\".");
+        public static MissingAssociationException Of<TKey, TValue>(RegisterKey<TKey, TValue> key)
+            where TKey : notnull
+            where TValue : notnull => new MissingAssociationException($"Object missing for: \"{key}\".");
 
 
 

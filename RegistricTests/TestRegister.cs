@@ -9,8 +9,8 @@ namespace GSR.Tests.Registric
         public void TestGet()
         {
             string key = "test.gsr.key";
-            IRegister<int, string> r = new Register<int, string>();
-            RegisterKey<int, string> rk = new(r, key);
+            IRegister<string, int> r = new Register<string, int>();
+            RegisterKey<string, int> rk = new(r, key);
 
             Assert.IsFalse(r.Promised(rk));
             Assert.AreEqual(rk, r.Get(key).Key);
@@ -22,20 +22,20 @@ namespace GSR.Tests.Registric
         [ExpectedException(typeof(MissingAssociationException))]
         public void TestUnwrapGottenReferenceBeforeAssociation()
         {
-            new Register<int, string>().Get("a").Get();
+            new Register<string, int>().Get("a").Get();
         } // end TestUnwrapReferenceEarly()
 
 
         [TestMethod]
         public void TestAssociateValue()
         {
-            IRegister<int, string> r = new Register<int, string>();
+            IRegister<string, int> r = new Register<string, int>();
 
             string key = "";
             int value = 64 ^ 2;
             Assert.IsFalse(r.Contains(key));
             Assert.IsFalse(r.Promised(key));
-            IReference<int, string> rr = r.AssociateValue(key, value);
+            IReference<string, int> rr = r.Associate(key, value);
             Assert.AreEqual(key, rr.Key.Key);
             Assert.AreEqual(value, rr.Get());
             Assert.IsTrue(r.Contains(key));
@@ -45,17 +45,17 @@ namespace GSR.Tests.Registric
         [TestMethod]
         public void TestAssociateValueTwice()
         {
-            IRegister<int, string> r = new Register<int, string>();
+            IRegister<string, int> r = new Register<string, int>();
 
             string key1 = "";
             string key2 = "-";
             int value = 64 ^ 2;
 
-            IReference<int, string> rr1 = r.AssociateValue(key1, value);
+            IReference<string, int> rr1 = r.Associate(key1, value);
             Assert.AreEqual(key1, rr1.Key.Key);
             Assert.AreEqual(value, rr1.Get());
 
-            IReference<int, string> rr2 = r.AssociateValue(key2, value);
+            IReference<string, int> rr2 = r.Associate(key2, value);
             Assert.AreEqual(key2, rr2.Key.Key);
             Assert.AreEqual(value, rr2.Get());
         } // end TestAssociateValueTwice()
@@ -64,13 +64,13 @@ namespace GSR.Tests.Registric
         [ExpectedException(typeof(KeyCollisionException))]
         public void TestAssociateKeyCollision()
         {
-            IRegister<int, string> r = new Register<int, string>();
+            IRegister<string, int> r = new Register<string, int>();
 
             string key = "";
             int value1 = 64 ^ 2;
             int value2 = 62;
-            r.AssociateValue(key, value1);
-            r.AssociateValue(key, value2);
+            r.Associate(key, value1);
+            r.Associate(key, value2);
         } // end TestAssociateKeyCollision()
 
 
@@ -78,15 +78,15 @@ namespace GSR.Tests.Registric
         [TestMethod]
         public void TestCloseWithNone()
         {
-            new Register<int, string>().Close();
+            new Register<string, int>().Close();
         } // end TestCloseWithNone()
 
         [TestMethod]
         public void TestCloseWithAssociated()
         {
-            Register<int, string> r = new Register<int, string>();
+            Register<string, int> r = new Register<string, int>();
 
-            r.AssociateValue("ejh", 904032);
+            r.Associate("ejh", 904032);
             r.Close();
         } // end TestCloseWithAssociated()
 
@@ -94,7 +94,7 @@ namespace GSR.Tests.Registric
         [ExpectedException(typeof(AggregateException))]
         public void TestCloseWithUnassociated()
         {
-            Register<int, string> r = new Register<int, string>();
+            Register<string, int> r = new Register<string, int>();
 
             r.Get(";;;;;;;;;;;;;;;;;;;");
             r.Close();
@@ -103,11 +103,11 @@ namespace GSR.Tests.Registric
         [TestMethod]
         public void TestGetExistingAfterClosure()
         {
-            Register<int, string> r = new Register<int, string>();
+            Register<string, int> r = new Register<string, int>();
 
             string b = "304";
             int value = 85930258;
-            r.AssociateValue(b, value);
+            r.Associate(b, value);
             r.Close();
             Assert.AreEqual(value, r.Get(b).Get());
         } // end TestGetExistingAfterClosure()
@@ -116,7 +116,7 @@ namespace GSR.Tests.Registric
         [ExpectedException(typeof(InvalidOperationException))]
         public void TestGetNewAfterClosure()
         {
-            Register<int, string> r = new Register<int, string>();
+            Register<string, int> r = new Register<string, int>();
 
             r.Close();
             r.Get("304");
@@ -126,22 +126,22 @@ namespace GSR.Tests.Registric
         [ExpectedException(typeof(InvalidOperationException))]
         public void TestAssociateNewValueAfterClosure()
         {
-            Register<int, string> r = new Register<int, string>();
+            Register<string, int> r = new Register<string, int>();
 
             r.Close();
-            r.AssociateValue("304", default);
+            r.Associate("304", default);
         } // end TestAssociateNewValueAfterClosure()
 
         [TestMethod]
         [ExpectedException(typeof(InvalidOperationException))]
         public void TestAssociateExistingValueAfterClosure()
         {
-            Register<int, string> r = new Register<int, string>();
+            Register<string, int> r = new Register<string, int>();
 
             string k = "3459jmivgowe";
-            r.AssociateValue(k, 0);
+            r.Associate(k, 0);
             r.Close();
-            r.AssociateValue(k, default);
+            r.Associate(k, default);
         } // end TestAssociateNewValueAfterClosure()
 
     } // end class

@@ -10,9 +10,9 @@ namespace GSR.Tests.Registric
         [DataRow(0)]
         public void TestGet(int value)
         {
-            IRegister<int, string> r = new FakeRegister<int, string>(contains: (r) => true, promised: (r) => true);
-            RegisterKey<int, string> rk = new(r, "test.gsr.key");
-            IReference<int, string> rr = new Reference<int, string>(rk, new Lazy<int>(() => value));
+            IRegister<string, int> r = new FakeRegister<string, int>(contains: (r) => true, promised: (r) => true);
+            RegisterKey<string, int> rk = new(r, "test.gsr.key");
+            IReference<string, int> rr = new Reference<string, int>(rk, new Lazy<int>(() => value));
             Assert.AreEqual(value, rr.Get());
         } // end TestGet()
 
@@ -21,9 +21,9 @@ namespace GSR.Tests.Registric
         [ExpectedException(typeof(MissingAssociationException))]
         public void TestGetUnassociated()
         {
-            IRegister<int, string> r = new FakeRegister<int, string>(contains: (r) => false, promised: (r) => true);
-            RegisterKey<int, string> rk = new(r, "test.gsr.key");
-            IReference<int, string> rr = new Reference<int, string>(rk, new Lazy<int>(() => throw new Exception()));
+            IRegister<string, int> r = new FakeRegister<string, int>(contains: (r) => false, promised: (r) => true);
+            RegisterKey<string, int> rk = new(r, "test.gsr.key");
+            IReference<string, int> rr = new Reference<string, int>(rk, new Lazy<int>(() => throw new Exception()));
             rr.Get();
         } // end TestGetUnloaded()
 
