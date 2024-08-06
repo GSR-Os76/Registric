@@ -2,9 +2,9 @@
 
 namespace GSR.Tests.Registric
 {
-    public sealed class FakeRegister<T, TKey> : IRegister<T, TKey>
-        where T : notnull
+    public sealed class FakeRegister<TKey, TValue> : IRegister<TKey, TValue>
         where TKey : notnull
+        where TValue : notnull
     {
         public int Count => throw new NotImplementedException();
 
@@ -27,17 +27,17 @@ namespace GSR.Tests.Registric
 
 
 
-        public IReference<T, TKey> AssociateValue(TKey key, T value)
+        public IReference<TKey, TValue> Associate(TKey key, TValue value)
         {
             throw new NotImplementedException();
-        }
+        } // end AssociateValue()
 
         public bool Contains(TKey key) => _contains(key);
 
-        public IReference<T, TKey> Get(TKey key)
+        public IReference<TKey, TValue> Get(TKey key)
         {
             throw new NotImplementedException();
-        }
+        } // end Get()
 
         public bool Promised(TKey key) => _promised(key);
 

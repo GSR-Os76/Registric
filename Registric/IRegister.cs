@@ -3,11 +3,11 @@
     /// <summary>
     /// Contract for a object register.
     /// </summary>
-    /// <typeparam name="T">The type of object held.</typeparam>
     /// <typeparam name="TKey"></typeparam>
-    public interface IRegister<T, TKey>
-        where T : notnull
+    /// <typeparam name="TValue">The type of object held.</typeparam>
+    public interface IRegister<TKey, TValue>
         where TKey : notnull
+        where TValue : notnull
     {
         /// <summary>
         /// The number of register keys bound to this register, both associated with a value or not.
@@ -48,7 +48,7 @@
         /// <param name="key">The key identifying the object.</param>
         /// <returns></returns>
         /// <exception cref="InvalidOperationException">Register is closed, and can't promise further values.</exception>
-        public IReference<T, TKey> Get(TKey key);
+        public IReference<TKey, TValue> Get(TKey key);
 
         /// <summary>
         /// Associates a value with 
@@ -58,7 +58,7 @@
         /// <returns></returns>
         /// <exception cref="InvalidOperationException">Register is closed, and can't try to associate further values.</exception>
         /// <exception cref="KeyCollisionException">An object had already been associated with that key.</exception>
-        public IReference<T, TKey> AssociateValue(TKey key, T value);
+        public IReference<TKey, TValue> Associate(TKey key, TValue value);
 
     } // end interface
 } // end namespace

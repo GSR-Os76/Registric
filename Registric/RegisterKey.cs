@@ -6,14 +6,14 @@ namespace GSR.Registric
     /// <summary>
     /// Key uniquely identifying an object registered within a register.
     /// </summary>
-    public struct RegisterKey<T, TKey>
-        where T : notnull
+    public struct RegisterKey<TKey, TValue>
         where TKey : notnull
+        where TValue : notnull
     {
         /// <summary>
         /// The register that the key belongs to.
         /// </summary>
-        public IRegister<T, TKey> Register { get; }
+        public IRegister<TKey, TValue> Register { get; }
 
         /// <summary>
         /// The registered objects unique identifier.
@@ -27,7 +27,7 @@ namespace GSR.Registric
         /// </summary>
         /// <param name="register"></param>
         /// <param name="key"></param>
-        public RegisterKey(IRegister<T, TKey> register, TKey key)
+        public RegisterKey(IRegister<TKey, TValue> register, TKey key)
         {
             Register = register.IsNotNull();
             Key = key.IsNotNull();
@@ -43,15 +43,15 @@ namespace GSR.Registric
 
         /// <inheritdoc/>
         public override bool Equals([NotNullWhen(true)] object? obj) =>
-            obj is RegisterKey<T, TKey> rk &&
+            obj is RegisterKey<TKey, TValue> rk &&
             ReferenceEquals(Register, rk.Register) &&
             Key.Equals(rk.Key);
 
         /// <inheritdoc/>
-        public static bool operator ==(RegisterKey<T, TKey> left, RegisterKey<T, TKey> right) => left.Equals(right);
+        public static bool operator ==(RegisterKey<TKey, TValue> left, RegisterKey<TKey, TValue> right) => left.Equals(right);
 
         /// <inheritdoc/>
-        public static bool operator !=(RegisterKey<T, TKey> left, RegisterKey<T, TKey> right) => !(left == right);
+        public static bool operator !=(RegisterKey<TKey, TValue> left, RegisterKey<TKey, TValue> right) => !(left == right);
 
     } // end record
 } // end namespace

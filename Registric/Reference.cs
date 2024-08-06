@@ -3,27 +3,27 @@
 namespace GSR.Registric
 {
     /// <summary>
-    /// Simple <see cref="IReference{T, TKey}"/> implementation.
+    /// Simple <see cref="IReference{Tkey, TValue}"/> implementation.
     /// </summary>
-    /// <typeparam name="T">The type of object referenced.</typeparam>
     /// <typeparam name="TKey"></typeparam>
-    public sealed class Reference<T, TKey> : IReference<T, TKey>
-        where T : notnull
+    /// <typeparam name="TValue">The type of object referenced.</typeparam>
+    public sealed class Reference<TKey, TValue> : IReference<TKey, TValue>
         where TKey : notnull
+        where TValue : notnull
     {
         /// <inheritdoc/>
-        public RegisterKey<T, TKey> Key { get; }
+        public RegisterKey<TKey, TValue> Key { get; }
 
-        private Lazy<T> _value;
+        private Lazy<TValue> _value;
 
 
 
         /// <summary>
-        /// Constructs an <see cref="Reference{T, TKey}"/>.
+        /// Constructs an <see cref="Reference{TKey, TValue}"/>.
         /// </summary>
         /// <param name="key">The key of the object the reference refers to.</param>
         /// <param name="value">The providersof the value.</param>
-        public Reference(RegisterKey<T, TKey> key, Lazy<T> value)
+        public Reference(RegisterKey<TKey, TValue> key, Lazy<TValue> value)
         {
             Key = key.IsNotNull();
             _value = value.IsNotNull();
@@ -31,7 +31,7 @@ namespace GSR.Registric
 
 
         /// <inheritdoc/>
-        public T Get() => this.IsPopulated()
+        public TValue Get() => this.IsPopulated()
             ? _value.Value
             : throw new MissingAssociationException("The object wasn't present in the register.");
     } // end class
