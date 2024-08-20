@@ -12,6 +12,8 @@ namespace GSR.Tests.Registric
 
         public TKey[] Keys => throw new NotImplementedException();
 
+        public IReference<TKey, TValue>[] Values => throw new NotImplementedException();
+
 
 
         private readonly Func<TKey, bool> _contains;

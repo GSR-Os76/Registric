@@ -20,9 +20,14 @@
         public bool IsClosed { get; }
 
         /// <summary>
-        /// All register keys bound to this register.
+        /// All register keys bound to this register at time of call.
         /// </summary>
         public TKey[] Keys { get; }
+
+        /// <summary>
+        /// Refences to all values that're promised by this register at time of call.
+        /// </summary>
+        public IReference<TKey, TValue>[] Values { get; }
 
 
 
