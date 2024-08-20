@@ -25,7 +25,12 @@ namespace GSR.Registric
         public bool _isClosed = false;
 
         /// <inheritdoc/>
-        public TKey[] Keys => _promised.Keys.ToArray();
+        public TKey[] Keys => _keys ?? _promised.Keys.ToArray();
+        private TKey[]? _keys = null;
+
+        /// <inheritdoc/>
+        public IReference<TKey, TValue>[] Values => _values ?? _promised.Values.ToArray();
+        private IReference<TKey, TValue>[]? _values = null;
 
 
 
@@ -45,6 +50,8 @@ namespace GSR.Registric
             if (e.Length > 0)
                 throw new AggregateException(e);
 
+            _keys = Keys;
+            _values = Values;
             _isClosed = true;
         } // end Close()
 
